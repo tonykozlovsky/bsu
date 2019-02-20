@@ -55,7 +55,7 @@ class DrawArea(QWidget):
                 self.figures[-1].add_segment(LineSegment(self.points[-2], self.points[-1], border_color))
             if len(self.points) == self.parent.num:
                 self.drawling = False
-        elif (len(self.points) - 1)*2 == self.parent.num:
+        elif (len(self.points) - 1) * 2 == self.parent.num:
             if self.parent.active == SymmetricShape.name():
                 self.figures.append(
                     SymmetricShape(self.points[0], self.points[1:], self.parent.num, border_color, bg_color))

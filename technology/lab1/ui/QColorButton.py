@@ -31,7 +31,7 @@ class QColorButton(QPushButton):
             self.colorChanged.emit()
 
         if self._color:
-            self.setStyleSheet("background-color: %s;"%self._color)
+            self.setStyleSheet("background-color: %s;" % self._color)
         else:
             self.setStyleSheet("")
 

@@ -18,8 +18,8 @@ class RegularShape(AsymmetricShape):
         r = get_distance(self.points[0], self.get_location())
         alpha = atan2((self.points[0].y() - self.get_location().y()), (self.points[0].x() - self.get_location().x()))
         for i in range(1, num):
-            x = r*cos(2.0*pi*i/num + alpha) + self.get_location().x()
-            y = r*sin(2.0*pi*i/num + alpha) + self.get_location().y()
+            x = r * cos(2.0 * pi * i / num + alpha) + self.get_location().x()
+            y = r * sin(2.0 * pi * i / num + alpha) + self.get_location().y()
             self.points.append(QPoint(x, y))
 
     @staticmethod
