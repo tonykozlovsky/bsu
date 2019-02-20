@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from math import cos, sin, pi, atan
+from math import cos, sin, pi, atan2
 
 from PyQt5.QtCore import QPoint
 
@@ -16,7 +16,7 @@ class RegularShape(AsymmetricShape):
 
     def _count_points(self, num):
         r = get_distance(self.points[0], self.get_location())
-        alpha = atan((self.points[0].y() - self.get_location().y())/(self.points[0].x() - self.get_location().x()))
+        alpha = atan2((self.points[0].y() - self.get_location().y()), (self.points[0].x() - self.get_location().x()))
         for i in range(1, num):
             x = r*cos(2.0*pi*i/num + alpha) + self.get_location().x()
             y = r*sin(2.0*pi*i/num + alpha) + self.get_location().y()
