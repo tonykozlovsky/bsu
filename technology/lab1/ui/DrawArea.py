@@ -41,8 +41,11 @@ class DrawArea(QWidget):
             fig.render(qp)
 
     def mousePressEvent(self, event):
-        border_color = self.parent.sidebar.border_color_btn.color()
-        bg_color = self.parent.sidebar.bg_color_btn.color()
+        if self.parent.get_active() == None:
+            return
+
+        border_color = self.parent.border_color
+        bg_color = self.parent.bg_color
 
         if not self.drawling:
             self.points = []
@@ -50,32 +53,32 @@ class DrawArea(QWidget):
             self.drawling = True
 
         self.points.append(event.pos())
-        if len(self.points) > 2 and self.parent.active == PolyLine.name():
-            if len(self.points) <= self.parent.num:
+        if len(self.points) > 2 and self.parent.get_active() == PolyLine.name():
+            if len(self.points) <= self.parent.get_num():
                 self.figures[-1].add_segment(LineSegment(self.points[-2], self.points[-1], border_color))
-            if len(self.points) == self.parent.num:
+            if len(self.points) == self.parent.get_num():
                 self.drawling = False
-        elif (len(self.points) - 1) * 2 == self.parent.num:
-            if self.parent.active == SymmetricShape.name():
+        elif (len(self.points) - 1) * 2 == self.parent.get_num():
+            if self.parent.get_active() == SymmetricShape.name():
                 self.figures.append(
-                    SymmetricShape(self.points[0], self.points[1:], self.parent.num, border_color, bg_color))
+                    SymmetricShape(self.points[0], self.points[1:], self.parent.get_num(), border_color, bg_color))
             else:
                 self.update()
                 return
             self.drawling = False
         elif len(self.points) == 2:
-            if self.parent.active == LineSegment.name():
+            if self.parent.get_active() == LineSegment.name():
                 self.figures.append(LineSegment(*self.points, border_color))
-            elif self.parent.active == Ray.name():
+            elif self.parent.get_active() == Ray.name():
                 self.figures.append(Ray(*self.points, border_color))
-            elif self.parent.active == Line.name():
+            elif self.parent.get_active() == Line.name():
                 self.figures.append(Line(*self.points, self.geometry(), border_color))
-            elif self.parent.active == Circle.name():
+            elif self.parent.get_active() == Circle.name():
                 self.figures.append(Circle(*self.points, border_color, bg_color))
-            elif self.parent.active == RegularShape.name():
+            elif self.parent.get_active() == RegularShape.name():
                 self.figures.append(
-                    RegularShape(self.points[0], [self.points[1]], self.parent.num, border_color, bg_color))
-            elif self.parent.active == PolyLine.name():
+                    RegularShape(self.points[0], [self.points[1]], self.parent.get_num(), border_color, bg_color))
+            elif self.parent.get_active() == PolyLine.name():
                 self.figures.append(PolyLine([LineSegment(*self.points, border_color)]))
                 self.update()
                 return
@@ -84,14 +87,14 @@ class DrawArea(QWidget):
                 return
             self.drawling = False
         elif len(self.points) == 3:
-            if self.parent.active == Ellipse.name():
+            if self.parent.get_active() == Ellipse.name():
                 self.figures.append(Ellipse(*self.points, border_color, bg_color))
             else:
                 self.update()
                 return
             self.drawling = False
-        if len(self.points) >= self.parent.num:
-            if self.parent.active == AsymmetricShape.name():
+        if len(self.points) >= self.parent.get_num():
+            if self.parent.get_active() == AsymmetricShape.name():
                 self.figures.append(AsymmetricShape(self.points, border_color, bg_color))
             else:
                 self.update()
